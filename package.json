@@ -26,7 +26,7 @@
     "appSupport": "webapp",
     "compatibility": ">=2.13.0",
     "displayName": "Zennora MQTT Export Manager",
-    "appIcon": "public/zennora.jpg"
+    "appIcon": "zennora.jpg"
   
   }
 }
