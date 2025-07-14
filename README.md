@@ -33,10 +33,10 @@ npm install
 sudo systemctl restart signalk
 ```
 
-### Method 2: NPM Installation (Future)
+### Method 2: NPM Installation from GitHhun repor
 ```bash
-cd ~/.signalk
-npm install zennora-signalk-mqtt-export
+cd ~/.signalk/node_modules
+npm install  motamman/zennora-signalk-mqtt-export
 sudo systemctl restart signalk
 ```
 
@@ -62,7 +62,7 @@ The plugin comes with default rules based on common marine data patterns:
 
 ## Web Interface
 
-Access the management interface at:
+Access the management interface at: (check if https and port 3000)
 - **https://your-signalk-server:3443/plugins/zennora-signalk-mqtt-export/**
 
 ### Interface Features
@@ -144,31 +144,6 @@ Example templates:
 }
 ```
 
-## Replacing Node-RED Flow
-
-This plugin is designed to replace complex Node-RED flows like the one you showed. Here's how to migrate:
-
-### Before (Node-RED)
-- Multiple SignalK subscription nodes
-- Complex parsing functions
-- Manual topic construction
-- Difficult to manage and modify
-
-### After (This Plugin)
-- Single plugin with web interface
-- Visual rule management
-- Automatic topic generation
-- Easy to enable/disable specific exports
-- No coding required for changes
-
-### Migration Steps
-1. **Install the plugin**
-2. **Configure MQTT broker settings**
-3. **Review default rules** (they match your existing flow)
-4. **Customize rules** as needed via the web interface
-5. **Test MQTT output** using the built-in test function
-6. **Disable Node-RED flow** once confirmed working
-
 ## Default Export Rules
 
 The plugin comes with practical rules for common marine data export:
@@ -184,119 +159,6 @@ The plugin comes with practical rules for common marine data export:
 - `navigation*` - Matches all navigation paths (`navigation.position`, `navigation.headingTrue`, etc.)
 - `electrical.batteries.*` - Matches all battery-related paths
 - `*` - Matches all paths (use with caution)
-
-## API Endpoints
-
-The plugin provides REST API endpoints for integration:
-
-### Get Rules
-```bash
-GET /plugins/zennora-signalk-mqtt-export/api/rules
-```
-
-### Update Rules
-```bash
-POST /plugins/zennora-signalk-mqtt-export/api/rules
-Content-Type: application/json
-
-{
-  "rules": [...]
-}
-```
-
-### MQTT Status
-```bash
-GET /plugins/zennora-signalk-mqtt-export/api/mqtt-status
-```
-
-### Test MQTT
-```bash
-POST /plugins/zennora-signalk-mqtt-export/api/test-mqtt
-```
-
-## Troubleshooting
-
-### MQTT Connection Issues
-1. **Check broker URL**: Ensure the MQTT broker is accessible
-2. **Verify credentials**: Check username/password if authentication is required
-3. **Network connectivity**: Ensure SignalK server can reach the MQTT broker
-4. **Firewall**: Check if MQTT port (usually 1883) is open
-
-### No Data Being Exported
-1. **Check rule status**: Ensure rules are enabled
-2. **Verify SignalK data**: Check if the specified paths have data in SignalK
-3. **Source filtering**: Ensure source filters match actual data sources
-4. **Path wildcards**: Ensure wildcard patterns match correctly (`navigation*` vs `navigation.*`)
-5. **Check logs**: Look at SignalK logs for error messages
-
-### Configuration Not Persisting
-1. **Save changes**: Always click "Save Changes" in the webapp
-2. **Check permissions**: Ensure SignalK has write permissions to its configuration directory
-3. **Restart SignalK**: Configuration changes are saved but require restart to take full effect
-
-### Performance Issues
-1. **Use "Send on Change"**: Enable this option to reduce MQTT traffic significantly
-2. **Reduce update periods**: Increase the period value for high-frequency data
-3. **Limit wildcards**: Be specific with paths instead of using `*`
-4. **Monitor resource usage**: Check CPU and memory usage
-
-## Advanced Usage
-
-### Custom Topic Templates
-Create custom topic structures for specific use cases:
-```
-marine/vessel/{context}/sensor/{path}
-iot/boat/data/{path}
-signalk/{context}/{path}/current
-```
-
-### Source Filtering
-Filter data by specific sources to avoid duplicates:
-- `derived-data` - Only calculated/derived values
-- `pypilot` - Only data from PyPilot autopilot system
-- `anchoralarm` - Only data from anchor alarm system
-- Leave empty for all sources
-
-### MMSI Exclusion
-Exclude specific vessel MMSIs from export rules:
-- Useful for preventing your own vessel's data from being exported in AIS rules
-- Enter comma-separated MMSIs: `368396230, 123456789`
-- Commonly used with `vessels.*` or `vessels.urn:*` contexts
-
-### Send on Change Only
-Significantly reduces MQTT traffic by only publishing when values change:
-- Filters out duplicate values automatically
-- Particularly useful for high-frequency data like GPS positions
-- Recommended for most use cases to reduce bandwidth
-
-### QoS Settings
-- **QoS 0**: At most once delivery (fastest, may lose messages)
-- **QoS 1**: At least once delivery (reliable, may duplicate)
-- **QoS 2**: Exactly once delivery (slowest, guaranteed unique)
-
-## Integration Examples
-
-### Home Assistant
-```yaml
-sensor:
-  - platform: mqtt
-    name: "Boat Position"
-    state_topic: "vessels/self/navigation/position"
-    value_template: "{{ value_json.value.latitude }},{{ value_json.value.longitude }}"
-```
-
-### Node-RED (Consumption)
-```json
-{
-  "id": "mqtt-in",
-  "type": "mqtt in",
-  "topic": "vessels/self/+/+",
-  "broker": "mqtt-broker"
-}
-```
-
-### Grafana
-Use MQTT data source to visualize marine data in real-time dashboards.
 
 ## License
 
