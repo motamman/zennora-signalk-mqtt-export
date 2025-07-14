@@ -51,15 +51,6 @@ Navigate to **SignalK Admin → Server → Plugin Config → Zennora MQTT Export
 - **Username/Password**: Optional authentication credentials
 - **Topic Prefix**: Optional prefix for all MQTT topics
 
-### Export Rules
-The plugin comes with default rules based on common marine data patterns:
-- **All Navigation Data**: Exports all navigation paths from your vessel
-- **Derived Data**: Calculated values from various sources
-- **PyPilot Data**: Autopilot information
-- **Anchor Alarm**: Anchor monitoring data
-- **All Vessels (AIS)**: Data from other vessels (with MMSI exclusion)
-- **AIS Vessels**: Specifically AIS targets from other vessels
-
 ## Web Interface
 
 Access the management interface at: (check if https and port 3000)
@@ -101,9 +92,9 @@ Access the management interface at: (check if https and port 3000)
 ```
 
 Examples:
-- `vessels/self/navigation/position`
 - `vessels/urn_mrn_imo_mmsi_123456789/navigation/position`
-- `vessels/self/electrical/batteries/house/voltage`
+- `vessels/urn_mrn_imo_mmsi_123456789/navigation/position`
+- `vessels/urn_mrn_imo_mmsi_123456789/electrical/batteries/house/voltage`
 
 ### Custom Topic Templates
 Use placeholders in topic templates:
