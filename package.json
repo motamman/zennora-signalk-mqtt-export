@@ -1,0 +1,29 @@
+{
+  "name": "zennora-signalk-mqtt-export",
+  "version": "0.1.0",
+  "description": "SignalK plugin to selectively export data to MQTT with webapp management interface",
+  "main": "index.js",
+  "keywords": [
+    "signalk-node-server-plugin",
+    "signalk-webapp",
+    "mqtt",
+    "export",
+    "marine-data",
+    "data-export"
+  ],
+  "author": "Maurice Tamman",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/motamman/zennora-signalk-mqtt-export.git"
+  },
+  "dependencies": {
+    "mqtt": "^4.3.7",
+    "fs-extra": "^11.1.0"
+  },
+  "signalk": {
+    "appSupport": "webapp",
+    "compatibility": ">=2.13.0",
+    "displayName": "Zennora MQTT Export Manager"
+  }
+}
