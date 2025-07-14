@@ -154,10 +154,3 @@ The plugin comes with practical rules for common marine data export:
 ## License
 
 MIT License - See [LICENSE](../LICENSE) file for details.
-
-## Support
-
-For issues and feature requests:
-- **Plugin Issues**: Report via GitHub issues
-- **SignalK Integration**: Check SignalK documentation
-- **MQTT Issues**: Consult MQTT broker documentation
