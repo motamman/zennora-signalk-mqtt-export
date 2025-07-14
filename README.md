@@ -33,7 +33,7 @@ npm install
 sudo systemctl restart signalk
 ```
 
-### Method 2: NPM Installation from GitHhun repor
+### Method 2: NPM Installation from GitHhub repo
 ```bash
 cd ~/.signalk/node_modules
 npm install  motamman/zennora-signalk-mqtt-export
