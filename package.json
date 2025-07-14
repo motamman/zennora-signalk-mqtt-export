@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "SignalK plugin to selectively export data to MQTT with webapp management interface",
   "main": "index.js",
+  "icon": "zennora.jpg",
   "keywords": [
     "signalk-node-server-plugin",
     "signalk-webapp",
