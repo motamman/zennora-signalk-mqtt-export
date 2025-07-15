@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "SignalK plugin to selectively export data to MQTT with webapp management interface",
   "main": "index.js",
-  "icon": "public/zennora.jpg",
+  "icon": "public/mqtt_export.png",
   "keywords": [
     "signalk-node-server-plugin",
     "signalk-webapp",
@@ -26,7 +26,7 @@
     "appSupport": "webapp",
     "compatibility": ">=2.13.0",
     "displayName": "Zennora MQTT Export Manager",
-    "appIcon": "zennora.jpg"
+    "appIcon": "mqtt_export.png"
   
   }
 }
