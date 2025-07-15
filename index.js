@@ -441,39 +441,6 @@ module.exports = function(app) {
       }
     });
 
-    // Get available SignalK paths (for rule creation)
-    router.get('/api/signalk-paths', (req, res) => {
-      try {
-        // Get available paths from SignalK
-        const paths = [];
-        const contexts = ['vessels.self', 'vessels.*'];
-        
-        // This is a simplified version - in practice you'd want to discover paths dynamically
-        res.json({
-          success: true,
-          contexts: contexts,
-          commonPaths: [
-            'navigation.position',
-            'navigation.courseOverGroundTrue',
-            'navigation.speedOverGround',
-            'navigation.headingTrue',
-            'environment.wind.speedApparent',
-            'environment.wind.angleApparent',
-            'electrical.batteries.*.voltage',
-            'electrical.batteries.*.current',
-            'propulsion.*.revolutions',
-            'propulsion.*.temperature',
-            'MAIANA.station.MMSI',
-            'communications.crewNames',
-            'design.beam',
-            'design.length'
-          ]
-        });
-      } catch (error) {
-        res.status(500).json({ success: false, error: error.message });
-      }
-    });
-
     // Serve static files
     const publicPath = path.join(__dirname, 'public');
     if (fs.existsSync(publicPath)) {
@@ -524,92 +491,6 @@ module.exports = function(app) {
         description: 'Optional prefix for all MQTT topics',
         default: ''
       },
-      exportRules: {
-        type: 'array',
-        title: 'Export Rules',
-        description: 'Rules defining which SignalK data to export to MQTT',
-        items: {
-          type: 'object',
-          properties: {
-            id: {
-              type: 'string',
-              title: 'Rule ID'
-            },
-            name: {
-              type: 'string',
-              title: 'Rule Name'
-            },
-            context: {
-              type: 'string',
-              title: 'SignalK Context',
-              description: 'vessels.self, vessels.*, vessels.urn:mmsi:123456, etc.',
-              default: 'vessels.self'
-            },
-            path: {
-              type: 'string',
-              title: 'SignalK Path',
-              description: 'navigation.position, *, electrical.batteries.*, etc.'
-            },
-            source: {
-              type: 'string',
-              title: 'Source Filter',
-              description: 'Only export data from this source (optional)',
-              default: ''
-            },
-            enabled: {
-              type: 'boolean',
-              title: 'Enabled',
-              default: true
-            },
-            period: {
-              type: 'integer',
-              title: 'Update Period (ms)',
-              description: 'How often to check for updates',
-              default: 1000,
-              minimum: 100
-            },
-            qos: {
-              type: 'integer',
-              title: 'MQTT QoS',
-              description: 'MQTT Quality of Service level',
-              enum: [0, 1, 2],
-              default: 0
-            },
-            retain: {
-              type: 'boolean',
-              title: 'MQTT Retain',
-              description: 'Set MQTT retain flag',
-              default: false
-            },
-            payloadFormat: {
-              type: 'string',
-              title: 'Payload Format',
-              description: 'Format of the MQTT payload',
-              enum: ['full', 'value-only'],
-              enumNames: ['Full SignalK Structure', 'Value Only'],
-              default: 'full'
-            },
-            topicTemplate: {
-              type: 'string',
-              title: 'Topic Template (Optional)',
-              description: 'Custom topic template. Use {context} and {path} placeholders',
-              default: ''
-            },
-            excludeMMSI: {
-              type: 'string',
-              title: 'Exclude MMSIs (Optional)',
-              description: 'Comma-separated list of MMSIs to exclude (e.g., 368396230, 123456789)',
-              default: ''
-            },
-            sendOnChange: {
-              type: 'boolean',
-              title: 'Send on Change Only',
-              description: 'Only send data when the value changes (reduces MQTT traffic)',
-              default: true
-            }
-          }
-        }
-      }
     }
   };
 
